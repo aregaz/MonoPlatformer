@@ -60,8 +60,9 @@ namespace MonoGamePlatformer
 								  new VertexPositionColor(new Vector3(0.5f, -0.5f, 0), Color.Gray)
 			                  };
 
-            //this.vertexDeclaration = new VertexDeclaration(this.vertexList);
-            //this.effect = new BasicEffect(this.graphics.GraphicsDevice);
+		    var str = "hello, github world";
+		    //this.vertexDeclaration = new VertexDeclaration(this.vertexList);
+		    //this.effect = new BasicEffect(this.graphics.GraphicsDevice);
 		}
 
 		/// <summary>
