@@ -16,17 +16,21 @@ namespace MonoGamePlatformer
 	/// </summary>
 	public class PlatformerGame : Game
 	{
-		GraphicsDeviceManager graphics;
-		SpriteBatch spriteBatch;
+		private readonly GraphicsDeviceManager graphics;
+		private GraphicsDevice device;
+		private SpriteBatch spriteBatch;
 
-		private VertexPositionColor[] vertexList;
-		private VertexDeclaration vertexDeclaration;
-		private BasicEffect effect;
+		private Effect effect;
+
+		//private VertexPositionColor[] vertexList;
+		//private VertexDeclaration vertexDeclaration;
+		//private BasicEffect effect;
 
 		public PlatformerGame()
 			: base()
 		{
 			graphics = new GraphicsDeviceManager(this);
+			
 			Content.RootDirectory = "Content";
 		}
 
@@ -39,6 +43,13 @@ namespace MonoGamePlatformer
 		protected override void Initialize()
 		{
 			// TODO: Add your initialization logic here
+			graphics.PreferredBackBufferWidth = 500;
+			graphics.PreferredBackBufferHeight = 500;
+			graphics.IsFullScreen = false;
+			graphics.ApplyChanges();
+			Window.Title = "Mono Platformer 2D - XNA";
+
+			//this.effect = this.Content.Load<Effect>("effects");
 
 			base.Initialize();
 		}
@@ -51,18 +62,19 @@ namespace MonoGamePlatformer
 		{
 			// Create a new SpriteBatch, which can be used to draw textures.
 			spriteBatch = new SpriteBatch(GraphicsDevice);
+			
+			this.device = graphics.GraphicsDevice;
 
-			// TODO: use this.Content to load your game content here
-			this.vertexList = new VertexPositionColor[3]
-			                  {
-				                  new VertexPositionColor(new Vector3(0, 0.5f, 0), Color.Gray),
-								  new VertexPositionColor(new Vector3(-0.5f, -0.5f, 0), Color.Gray),
-								  new VertexPositionColor(new Vector3(0.5f, -0.5f, 0), Color.Gray)
-			                  };
+			//// TODO: use this.Content to load your game content here
+			//this.vertexList = new VertexPositionColor[3]
+			//				  {
+			//					  new VertexPositionColor(new Vector3(0, 0.5f, 0), Color.Gray),
+			//					  new VertexPositionColor(new Vector3(-0.5f, -0.5f, 0), Color.Gray),
+			//					  new VertexPositionColor(new Vector3(0.5f, -0.5f, 0), Color.Gray)
+			//				  };
 
-		    var str = "hello, github world";
-		    //this.vertexDeclaration = new VertexDeclaration(this.vertexList);
-		    //this.effect = new BasicEffect(this.graphics.GraphicsDevice);
+			//this.vertexDeclaration = new VertexDeclaration(this.vertexList);
+			//this.effect = new BasicEffect(this.graphics.GraphicsDevice);
 		}
 
 		/// <summary>
@@ -101,6 +113,13 @@ namespace MonoGamePlatformer
 			this.GraphicsDevice.Clear(Color.Bisque);
 
 			// TODO: Add your drawing code here
+
+			this.effect.CurrentTechnique = effect.Techniques["Pretransformed"];
+			foreach (EffectPass pass in this.effect.CurrentTechnique.Passes)
+			{
+				pass.Apply();
+
+			}
 
 			base.Draw(gameTime);
 		}
